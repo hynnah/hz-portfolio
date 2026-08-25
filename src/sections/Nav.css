@@ -1,0 +1,48 @@
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 3vw, 32px);
+  flex-wrap: wrap;
+  padding: 16px clamp(20px, 4vw, 40px);
+  background: linear-gradient(#0a0908ee, #0a090800);
+  backdrop-filter: blur(3px);
+}
+
+.nav-bar__brand {
+  margin-right: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: var(--color-warm-white);
+}
+
+.nav-bar__mark {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4vw, 30px);
+  line-height: 1;
+  color: var(--color-warm-white);
+  white-space: nowrap;
+}
+
+.nav-bar__name {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 2.6vw, 20px);
+  line-height: 1;
+  color: var(--color-warm-white);
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.nav-bar__link {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: clamp(16px, 2.4vw, 20px);
+  letter-spacing: 0.02em;
+  color: #ded8ca;
+  transition: color 0.3s ease;
+}
+
+.nav-bar__link:hover { color: var(--color-accent-300); }
