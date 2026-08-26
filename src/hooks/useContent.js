@@ -53,11 +53,19 @@ export function useContent() {
 
     try {
       const [profileRes, skillsRes, eduRes, certsRes, projectsRes] = await Promise.all([
-        supabase.from('profile').select('*').eq('id', 1).maybeSingle(),
-        supabase.from('skill_groups').select('*').order('sort_order').order('id'),
-        supabase.from('education').select('*').order('sort_order').order('id'),
-        supabase.from('certifications').select('*').order('sort_order').order('id'),
-        supabase.from('projects').select('*').order('sort_order').order('id'),
+        supabase
+          .from('profile')
+          .select('id, story_line, name, subtitle, about_paragraph, location, email, github_url, linkedin_url, portrait_url, resume_url, updated_at')
+          .eq('id', 1)
+          .maybeSingle(),
+        supabase.from('skill_groups').select('id, label, items, sort_order').order('sort_order').order('id'),
+        supabase.from('education').select('id, school, degree, years, sort_order').order('sort_order').order('id'),
+        supabase.from('certifications').select('id, title, issuer, year, sort_order').order('sort_order').order('id'),
+        supabase
+          .from('projects')
+          .select('id, num, title, kind, dates, blurb, stack, tags, full_description, repo_url, demo_url, private_note, image_url, preview_url, sort_order')
+          .order('sort_order')
+          .order('id'),
       ]);
 
       const hasError =
