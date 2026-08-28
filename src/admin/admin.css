@@ -73,12 +73,6 @@
   color: var(--color-text-faint);
 }
 
-.admin__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
-
 .admin__form {
   display: flex;
   flex-direction: column;
@@ -133,8 +127,6 @@
   font-size: 12px;
   padding: 2px 0;
 }
-.admin__status--ok { color: #8fbf8f; }
-.admin__status--err { color: #d98a7a; }
 
 .admin__toolbar {
   display: flex;
