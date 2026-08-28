@@ -1,0 +1,45 @@
+.archive-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: #080706ee;
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  animation: hz-fade-up 0.5s ease both;
+}
+
+.archive-dialog {
+  align-items: stretch;
+  gap: 18px;
+  border-color: rgba(182, 130, 53, 0.4);
+}
+
+.archive-dialog__eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.archive-dialog__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.archive-dialog .field { color: #ded8ca; }
+.archive-dialog .input { color: var(--color-ivory); }
+
+.archive-dialog__error {
+  margin: 0;
+  font-size: 13px;
+  color: #d98a7a;
+}
+
+.archive-dialog__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
