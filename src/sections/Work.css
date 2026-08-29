@@ -334,9 +334,9 @@
 }
 
 @media (max-width: 900px) {
-  .work__rail { grid-auto-columns: minmax(0, calc((100% - 30px) / 2)); }
+  .work__rail { grid-auto-columns: calc(46vw - 15px); }
 }
 
 @media (max-width: 560px) {
-  .work__rail { grid-auto-columns: minmax(0, 78%); }
+  .work__rail { grid-auto-columns: 78vw; }
 }
