@@ -9,20 +9,30 @@ export default function Work({ projects }) {
   const [hover, setHover] = useState(null);
   const [open, setOpen] = useState(null);
   const [overflowing, setOverflowing] = useState(false);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
   useReveal(rootRef, [projects]);
 
   useEffect(() => {
+    const el = railRef.current;
+    if (!el) return undefined;
+
     const measure = () => {
-      const el = railRef.current;
-      if (!el) return;
-      setOverflowing(el.scrollWidth - el.clientWidth > 4);
+      // Sub-pixel grid rounding can leave a few px of "scrollable" width even
+      // when every card is already fully visible, so require a real overflow
+      // (at least a fraction of a card) before showing the scroll arrows.
+      setOverflowing(el.scrollWidth - el.clientWidth > 24);
+      setAtStart(el.scrollLeft <= 4);
+      setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
     };
     measure();
     window.addEventListener('resize', measure);
+    el.addEventListener('scroll', measure, { passive: true });
     const t = setTimeout(measure, 120);
     return () => {
       window.removeEventListener('resize', measure);
+      el.removeEventListener('scroll', measure);
       clearTimeout(t);
     };
   }, [projects]);
@@ -55,11 +65,12 @@ export default function Work({ projects }) {
         </div>
         <div className="rule work__rule" data-rule="1" />
 
-        <div
-          ref={railRef}
-          className="work__rail"
-          onMouseLeave={() => setHover(null)}
-        >
+        <div className="work__rail-wrap">
+          <div
+            ref={railRef}
+            className="work__rail"
+            onMouseLeave={() => setHover(null)}
+          >
           {projects.map((p, i) => {
             const ringActive = hover === i;
             const revealed = hover === i || open === i;
@@ -116,21 +127,16 @@ export default function Work({ projects }) {
               </div>
             );
           })}
-        </div>
+          </div>
 
-        <div className="work__footer">
-          <a
-            href="https://github.com/hynnah?tab=repositories"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="work__all-link"
-          >
-            All repositories
-          </a>
           {overflowing && (
-            <div className="work__arrows">
-              <button type="button" onClick={() => scrollRail(-1)} aria-label="Previous projects" className="work__arrow-btn">←</button>
-              <button type="button" onClick={() => scrollRail(1)} aria-label="Next projects" className="work__arrow-btn">→</button>
+            <div className="work__arrows work__arrows--overlay">
+              {!atStart && (
+                <button type="button" onClick={() => scrollRail(-1)} aria-label="Previous projects" className="work__arrow-btn work__arrow-btn--prev">←</button>
+              )}
+              {!atEnd && (
+                <button type="button" onClick={() => scrollRail(1)} aria-label="Next projects" className="work__arrow-btn work__arrow-btn--next">→</button>
+              )}
             </div>
           )}
         </div>
@@ -183,6 +189,17 @@ export default function Work({ projects }) {
             </div>
           </div>
         )}
+
+        <div className="work__footer">
+          <a
+            href="https://github.com/hynnah?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="work__all-link"
+          >
+            All repositories
+          </a>
+        </div>
       </div>
     </section>
   );
