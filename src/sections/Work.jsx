@@ -60,7 +60,7 @@ export default function Work({ projects }) {
             <h2 className="work__title">Selected Projects</h2>
           </div>
           <p className="work__intro">
-            Four systems built for real campus problems — a clinic, a shuttle line, a kitchen, a classroom. Select one to read the full case.
+            Behind every curtain lies a solution built from code. Hover over a window to preview the concept, and select a project to read the full case study.
           </p>
         </div>
         <div className="rule work__rule" data-rule="1" />
