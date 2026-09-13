@@ -81,8 +81,12 @@ create table if not exists certifications (
   title text not null,
   issuer text not null,
   year text not null,
+  certificate_url text,
   sort_order int not null default 0
 );
+
+-- If you already ran this file before certificate_url existed, add it retroactively:
+-- alter table certifications add column if not exists certificate_url text;
 
 create table if not exists projects (
   id uuid primary key default gen_random_uuid(),

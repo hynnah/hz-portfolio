@@ -60,7 +60,7 @@ export function useContent() {
           .maybeSingle(),
         supabase.from('skill_groups').select('id, label, items, sort_order').order('sort_order').order('id'),
         supabase.from('education').select('id, school, degree, years, sort_order').order('sort_order').order('id'),
-        supabase.from('certifications').select('id, title, issuer, year, sort_order').order('sort_order').order('id'),
+        supabase.from('certifications').select('id, title, issuer, year, certificate_url, sort_order').order('sort_order').order('id'),
         supabase
           .from('projects')
           .select('id, num, title, kind, dates, blurb, stack, tags, full_description, repo_url, demo_url, private_note, image_url, preview_url, sort_order')
