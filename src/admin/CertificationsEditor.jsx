@@ -1,23 +1,42 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { uploadAsset } from '../lib/uploadAsset';
 import { useToast } from './ToastContext';
 
 function blankRow(sortOrder) {
-  return { id: null, title: '', issuer: '', year: '', sort_order: sortOrder };
+  return { id: null, title: '', issuer: '', year: '', certificate_url: null, sort_order: sortOrder };
 }
 
 export default function CertificationsEditor({ certifications, reload }) {
   const [rows, setRows] = useState(certifications);
   const [busyId, setBusyId] = useState(null);
+  const [uploadingId, setUploadingId] = useState(null);
   const [savingAll, setSavingAll] = useState(false);
   const showToast = useToast();
 
   const update = (idx, patch) => setRows((r) => r.map((row, i) => (i === idx ? { ...row, ...patch } : row)));
   const addRow = () => setRows((r) => [...r, blankRow(r.length ? Math.max(...r.map((x) => x.sort_order)) + 1 : 1)]);
 
+  const handleUpload = (idx) => async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const key = rows[idx].id ?? `new-${idx}`;
+    setUploadingId(key);
+    try {
+      const url = await uploadAsset(file, 'certificates');
+      update(idx, { certificate_url: url });
+      showToast('Certificate uploaded — click Save to publish it.');
+    } catch (err) {
+      showToast(err.message, false);
+    } finally {
+      setUploadingId(null);
+      e.target.value = '';
+    }
+  };
+
   const saveRow = async (idx) => {
     const row = rows[idx];
-    const payload = { title: row.title, issuer: row.issuer, year: row.year, sort_order: row.sort_order };
+    const payload = { title: row.title, issuer: row.issuer, year: row.year, certificate_url: row.certificate_url || null, sort_order: row.sort_order };
     const query = row.id
       ? supabase.from('certifications').update(payload).eq('id', row.id)
       : supabase.from('certifications').insert(payload).select().single();
@@ -95,6 +114,22 @@ export default function CertificationsEditor({ certifications, reload }) {
                   <span>Order</span>
                   <input className="input" type="number" value={row.sort_order} onChange={(e) => update(idx, { sort_order: Number(e.target.value) })} />
                 </label>
+              </div>
+              <div className="admin__row">
+                <label className="field" style={{ flex: '1 1 240px' }}>
+                  <span>{uploadingId === key ? 'Uploading…' : 'Certificate file (PDF or image)'}</span>
+                  <input className="input" type="file" accept="application/pdf,image/*" onChange={handleUpload(idx)} />
+                </label>
+                {row.certificate_url && (
+                  <div className="admin__image-actions">
+                    <a href={row.certificate_url} target="_blank" rel="noopener noreferrer" className="admin__status" style={{ flex: '0 1 auto' }}>
+                      View certificate
+                    </a>
+                    <button type="button" className="admin__remove-btn" onClick={() => update(idx, { certificate_url: null })}>
+                      Remove
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="admin__toolbar">
                 <button type="button" className="btn btn-danger" onClick={() => remove(idx)} disabled={busyId === key}>Delete</button>

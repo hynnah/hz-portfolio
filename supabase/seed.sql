@@ -27,10 +27,10 @@ insert into education (school, degree, years, sort_order) values
   ('University of San Carlos', 'BS Information Technology', '2024 — Present', 1),
   ('Cebu Institute of Technology — University', 'Senior High School Diploma, STEM Strand', 'June 2024', 2);
 
-insert into certifications (title, issuer, year, sort_order) values
-  ('Passion Platform: Leveraging Web Scraping for Job Search', 'Cisco x Innovare', '2024', 1),
-  ('Containerization and Virtualization with Docker and Kubernetes', 'DataCamp', '2025', 2),
-  ('AI & NLP Training Seminar', 'DOST-NICER', '2026', 3);
+insert into certifications (title, issuer, year, certificate_url, sort_order) values
+  ('Passion Platform: Leveraging Web Scraping for Job Search', 'Cisco x Innovare', '2024', '/uploads/certificates/cisco-innovare-web-scraping.pdf', 1),
+  ('Containerization and Virtualization with Docker and Kubernetes', 'DataCamp', '2025', '/uploads/certificates/docker-kubernetes.pdf', 2),
+  ('AI & NLP Training Seminar', 'DOST-NICER', '2026', '/uploads/certificates/ai-nlp-seminar.pdf', 3);
 
 insert into projects (num, title, kind, dates, blurb, stack, tags, full_description, repo_url, demo_url, private_note, image_url, preview_url, sort_order) values
 (

@@ -29,9 +29,9 @@ export const defaultEducation = [
 ];
 
 export const defaultCertifications = [
-  { id: 'cisco', title: 'Passion Platform: Leveraging Web Scraping for Job Search', issuer: 'Cisco x Innovare', year: '2024', sort_order: 1 },
-  { id: 'docker', title: 'Containerization and Virtualization with Docker and Kubernetes', issuer: 'DataCamp', year: '2025', sort_order: 2 },
-  { id: 'nlp', title: 'AI & NLP Training Seminar', issuer: 'DOST-NICER', year: '2026', sort_order: 3 },
+  { id: 'cisco', title: 'Passion Platform: Leveraging Web Scraping for Job Search', issuer: 'Cisco x Innovare', year: '2024', certificate_url: '/uploads/certificates/cisco-innovare-web-scraping.pdf', sort_order: 1 },
+  { id: 'docker', title: 'Containerization and Virtualization with Docker and Kubernetes', issuer: 'DataCamp', year: '2025', certificate_url: '/uploads/certificates/docker-kubernetes.pdf', sort_order: 2 },
+  { id: 'nlp', title: 'AI & NLP Training Seminar', issuer: 'DOST-NICER', year: '2026', certificate_url: '/uploads/certificates/ai-nlp-seminar.pdf', sort_order: 3 },
 ];
 
 export const defaultProjects = [

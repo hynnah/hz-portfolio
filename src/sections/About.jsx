@@ -78,12 +78,19 @@ export default function About({ profile, skillGroups, education, certifications,
         <div className="about__certs" data-reveal="1">
           <h4 className="label-heading">Certifications</h4>
           <div className="about__certs-grid">
-            {certifications.map((c) => (
-              <div key={c.id ?? c.title} className="about__cert-card">
-                <span className="about__cert-meta">{c.year} · {c.issuer}</span>
-                <span className="about__cert-title">{c.title}</span>
-              </div>
-            ))}
+            {certifications.map((c) => {
+              const CardTag = c.certificate_url ? 'a' : 'div';
+              const cardProps = c.certificate_url
+                ? { href: c.certificate_url, target: '_blank', rel: 'noopener noreferrer' }
+                : {};
+              return (
+                <CardTag key={c.id ?? c.title} className="about__cert-card" {...cardProps}>
+                  <span className="about__cert-meta">{c.year} · {c.issuer}</span>
+                  <span className="about__cert-title">{c.title}</span>
+                  {c.certificate_url && <span className="about__cert-view">View certificate →</span>}
+                </CardTag>
+              );
+            })}
           </div>
         </div>
       </div>

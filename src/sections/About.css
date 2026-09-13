@@ -190,3 +190,12 @@
 }
 
 .about__cert-title { font-size: 15px; line-height: 1.55; color: #ded8ca; }
+
+.about__cert-view {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  transition: color 0.3s ease;
+}
+.about__cert-card:hover .about__cert-view { color: var(--color-accent-300); }
