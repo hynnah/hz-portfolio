@@ -44,6 +44,16 @@ export default function Work({ projects }) {
   };
 
   const openProject = open === null ? null : projects[open];
+  const previewHref = openProject ? openProject.demo_url || openProject.repo_url : null;
+  const PreviewTag = previewHref ? 'a' : 'div';
+  const previewProps = previewHref
+    ? {
+        href: previewHref,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        'aria-label': `Open ${openProject.title} ${openProject.demo_url ? 'live demo' : 'repository'}`,
+      }
+    : {};
 
   return (
     <section id="work" data-screen-label="Work" className="work" ref={rootRef}>
@@ -149,14 +159,16 @@ export default function Work({ projects }) {
               <span className="work__detail-dates">{openProject.dates}</span>
               {openProject.preview_url && (
                 <figure className="work__detail-preview">
-                  <div className="work__detail-preview-frame">
-                    <div className="work__detail-preview-mat">
-                      <ImagePlate
-                        src={openProject.preview_url}
-                        alt={`${openProject.title} system preview`}
-                      />
+                  <PreviewTag {...previewProps}>
+                    <div className="work__detail-preview-frame">
+                      <div className="work__detail-preview-mat">
+                        <ImagePlate
+                          src={openProject.preview_url}
+                          alt={`${openProject.title} system preview`}
+                        />
+                      </div>
                     </div>
-                  </div>
+                  </PreviewTag>
                   <figcaption className="work__detail-preview-caption">System preview — {openProject.title}</figcaption>
                 </figure>
               )}
